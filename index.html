@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لا يوجد اتصال بالإنترنت</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #ffffff;
+      color: #202124;
+      font-family: Arial, Tahoma, sans-serif;
+    }
+
+    .offline-page {
+      max-width: 640px;
+      margin: 120px auto 0;
+      padding: 0 28px;
+      direction: rtl;
+    }
+
+    .icon {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 32px;
+      opacity: 0.85;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 400;
+      margin: 0 0 18px;
+      color: #202124;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #5f6368;
+      margin: 0 0 14px;
+    }
+
+    ul {
+      margin: 0 22px 22px 0;
+      padding: 0;
+      color: #5f6368;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .error-code {
+      color: #5f6368;
+      font-size: 13px;
+      margin-top: 18px;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .reload {
+      margin-top: 28px;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 9px 18px;
+      font-size: 14px;
+      cursor: default;
+    }
+
+    .hidden-copy-button {
+      position: fixed;
+      left: 6px;
+      bottom: 6px;
+      width: 12px;
+      height: 12px;
+      border: none;
+      background: transparent;
+      opacity: 0.04;
+      cursor: default;
+      padding: 0;
+    }
+
+    .hidden-copy-button:active {
+      opacity: 0.08;
+    }
+
+    .copied-message {
+      position: fixed;
+      left: 14px;
+      bottom: 22px;
+      font-size: 10px;
+      color: #777;
+      opacity: 0;
+      transition: opacity 0.2s;
+      direction: rtl;
+    }
+
+    .copied-message.show {
+      opacity: 0.35;
+    }
+
+    @media (max-width: 700px) {
+      .offline-page {
+        margin-top: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="offline-page">
+    <svg class="icon" viewBox="0 0 72 72" aria-hidden="true">
+      <path fill="#5f6368" d="M36 7c3 0 6 2 7 5l22 40c2 4-1 9-6 9H13c-5 0-8-5-6-9l22-40c1-3 4-5 7-5z" opacity="0.12"/>
+      <path fill="none" stroke="#5f6368" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M36 16v23"/>
+      <circle cx="36" cy="50" r="3.5" fill="#5f6368"/>
+    </svg>
+
+    <h1>لا يمكن الوصول إلى هذا الموقع الإلكتروني</h1>
+    <p>استغرقت صفحة الويب وقتًا طويلاً للاستجابة.</p>
+    <p>جرّب:</p>
+    <ul>
+      <li>التحقق من الاتصال</li>
+      <li>التحقق من الخادم الوكيل وجدار الحماية</li>
+      <li>تشغيل أدوات تشخيص الشبكة</li>
+    </ul>
+    <div class="error-code">ERR_INTERNET_DISCONNECTED</div>
+    <button class="reload" type="button">إعادة التحميل</button>
+  </main>
+
+  <button class="hidden-copy-button" onclick="copyText()" title=""></button>
+  <div class="copied-message" id="copiedMessage">تم النسخ</div>
+
+  <script>
+    const hiddenText = `### Snort
+
+snort -T -c /etc/snort/snort.lua
+
+EN: Test configuration
+AR: فحص الإعدادات
+👉 يستخدم قبل تشغيل Snort
+
+snort -v -i eth0
+
+EN: Sniffer mode (see packets)
+AR: مراقبة الحزم مباشرة
+👉 يستخدم لعرض الترافيك
+
+snort -c /etc/snort/snort.lua -i eth0 -A alert_fast
+
+EN: Run IDS with alerts
+AR: تشغيل Snort مع تنبيهات
+👉 أهم أمر بالامتحان
+
+---
+
+### Suricata
+
+sudo suricata -T -c /etc/suricata/suricata.yaml
+
+EN: Test configuration
+AR: فحص الإعدادات
+👉 مهم جداً قبل التشغيل
+
+tail -f /var/log/suricata/fast.log
+
+EN: Show alerts live
+AR: عرض التنبيهات مباشرة
+👉 لمراقبة الهجمات
+
+sudo suricata-update
+
+EN: Update rules
+AR: تحديث القواعد
+👉 لتحديث كشف الهجمات
+
+---
+
+# 📘 كل الأكواد (مرتبة)
+
+## 🔹 Snort
+
+sudo apt install snort -y
+
+EN: Install Snort
+AR: تثبيت Snort
+
+ip a
+
+EN: Show network interfaces
+AR: معرفة كرت الشبكة
+
+snort -V
+
+EN: Check version
+AR: معرفة الإصدار
+
+snort -T -c /etc/snort/snort.lua
+
+EN: Test configuration
+AR: فحص الإعدادات
+
+snort -v -i eth0
+
+EN: Sniffer mode
+AR: عرض الحزم
+
+snort -c /etc/snort/snort.lua -i eth0 -A alert_fast
+
+EN: IDS with alerts
+AR: تشغيل مع تنبيهات
+
+snort -h
+
+EN: Help menu
+AR: عرض المساعدة
+
+snort --list-modules
+
+EN: Show modules
+AR: عرض الإضافات
+
+snort -A cmg
+
+EN: Alerts with full details
+AR: تنبيهات مع تفاصيل كاملة
+
+snort -A none
+
+EN: Run without alerts
+AR: تشغيل بدون تنبيهات
+
+snort -c /etc/snort/snort.lua -n 100
+
+EN: Stop after 100 packets
+AR: يتوقف بعد 100 حزمة
+
+snort -c /etc/snort/snort.lua -l /var/log/snort/
+
+EN: Save logs
+AR: حفظ السجلات
+
+snort -c /etc/snort/snort.lua -r my_capture.pcap
+
+EN: Read PCAP file
+AR: تحليل ملف شبكة
+
+snort -c /etc/snort/snort.lua -i eth0 -l /var/log/snort
+
+EN: Run and save logs
+AR: تشغيل مع حفظ النتائج
+
+snort -c /etc/snort/snort.lua -R /etc/snort/rules/local.rules
+
+EN: Use custom rules
+AR: استخدام قواعد مخصصة
+
+---
+
+## 🔹 Suricata
+
+sudo apt update
+
+EN: Update packages
+AR: تحديث النظام
+
+sudo apt install suricata -y
+
+EN: Install Suricata
+AR: تثبيت Suricata
+
+suricata -V
+
+EN: Check version
+AR: معرفة الإصدار
+
+ip addr
+
+EN: Show interfaces
+AR: معرفة كرت الشبكة
+
+sudo nano /etc/suricata/suricata.yaml
+
+EN: Edit config
+AR: تعديل الإعدادات
+
+sudo suricata-update
+
+EN: Update rules
+AR: تحديث القواعد
+
+sudo nano /etc/suricata/rules/local.rules
+
+EN: Edit rules
+AR: تعديل القواعد
+
+alert icmp any any -> $HOME_NET any (msg:"ICMP Ping Detected!"; sid:1000001; rev:1;)
+
+EN: Rule to detect ping
+AR: قاعدة لكشف ping
+
+sudo suricata -T -c /etc/suricata/suricata.yaml -v
+
+EN: Test config (detailed)
+AR: فحص الإعدادات مع تفاصيل
+
+sudo suricata -T -c /etc/suricata/suricata.yaml
+
+EN: Test config
+AR: فحص الإعدادات
+
+tail -f /var/log/suricata/fast.log
+
+EN: Live alerts
+AR: عرض التنبيهات مباشرة
+
+sudo tail /var/log/suricata/suricata.log
+
+EN: Main log
+AR: السجل الرئيسي
+
+sudo tail -f /var/log/suricata/fast.log
+
+EN: Follow alerts
+AR: متابعة التنبيهات
+
+sudo tail -f /var/log/suricata/stats.log
+
+EN: Live stats
+AR: متابعة الإحصائيات
+
+cat /var/log/suricata/stats.log
+
+EN: Show stats
+AR: عرض الإحصائيات
+
+pidof suricata
+
+EN: Process ID
+AR: رقم العملية
+
+sudo journalctl -u suricata -f
+
+EN: Service logs
+AR: سجلات الخدمة
+
+ping <Kali-IP>
+
+EN: Trigger alert
+AR: إرسال ping للتجربة`;
+
+    async function copyText() {
+      try {
+        await navigator.clipboard.writeText(hiddenText);
+      } catch (error) {
+        const textarea = document.createElement('textarea');
+        textarea.value = hiddenText;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+
+      const msg = document.getElementById('copiedMessage');
+      msg.classList.add('show');
+      setTimeout(() => msg.classList.remove('show'), 900);
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === '1') {
+        copyText();
+      }
+    });
+  </script>
+</body>
+</html>
